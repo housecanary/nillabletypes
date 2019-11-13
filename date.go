@@ -1,3 +1,17 @@
+// Copyright 2019 HouseCanary, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package nillabletypes
 
 import (
@@ -36,24 +50,21 @@ func (v Date) Nil() bool {
 }
 
 // DaysAgo returns the number of days elapsed since Date
-func (v Date) DaysAgo() (Int, error) {
+func (v Date) DaysAgo() (Int64, error) {
 	if v.Nil() {
-		return Int{}, nil
+		return Int64{}, nil
 	}
 
-	t, err := time.Parse("2006-01-02", v.String())
+	t, err := time.ParseInLocation("2006-01-02", v.String(), time.Local)
 	if err != nil {
-		return Int{}, err
+		return Int64{}, err
 	}
 
-	return NewInt(int64(time.Since(t).Hours() / 24)), nil
+	return NewInt(int(time.Since(t).Hours() / 24)), nil
 }
 
 // String implements the fmt.Stringer interface
 func (v Date) String() string {
-	if v.Nil() {
-		return "nil"
-	}
 	return v.v
 }
 
