@@ -19,6 +19,7 @@ to some other function.
   architecture is 32- or 64-bit.
 * `String`: represents a nil-able `string` type.
 * `Date`: represents a nil-able date encoded as an ISO string.
+* `Uint32`: represents a nil-able `uint32` type.
 
 ## Supported Interfaces
 
