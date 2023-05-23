@@ -155,7 +155,7 @@ func TestDate_Before(t *testing.T) {
 	}{
 		{
 			name:  "this before other",
-			this:  Date{v: "2023-05-20", present: true, initialized: true},
+			this:  Date{v: "2022-06-20", present: true, initialized: true},
 			other: Date{v: "2023-05-22", present: true, initialized: true},
 			want:  true,
 		},
@@ -165,6 +165,12 @@ func TestDate_Before(t *testing.T) {
 			other: Date{v: "2023-05-22", present: true, initialized: true},
 			want:  false,
 		},
+		{
+			name:  "this equal other",
+			this:  Date{v: "2023-05-30", present: true, initialized: true},
+			other: Date{v: "2023-05-30", present: true, initialized: true},
+			want:  false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -172,6 +178,7 @@ func TestDate_Before(t *testing.T) {
 			if err != nil {
 				t.Errorf("Date.Before(): error = %v", err)
 			}
+			// got := tt.this.Before(tt.other)
 			if got != tt.want {
 				t.Errorf("Date.Before(): got = %v, want = %v", got, tt.want)
 			}
@@ -226,8 +233,14 @@ func TestDate_After(t *testing.T) {
 		},
 		{
 			name:  "this not after other",
-			this:  Date{v: "2023-05-20", present: true, initialized: true},
+			this:  Date{v: "2023-04-20", present: true, initialized: true},
 			other: Date{v: "2023-05-22", present: true, initialized: true},
+			want:  false,
+		},
+		{
+			name:  "this equal other",
+			this:  Date{v: "2023-05-30", present: true, initialized: true},
+			other: Date{v: "2023-05-30", present: true, initialized: true},
 			want:  false,
 		},
 	}

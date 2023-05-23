@@ -27,6 +27,8 @@ import (
 // TODO(faulkner): technically this is incorrect since it'll match "2000-12-3456789"; useful if we want to trim the time from a datetime, but if we don't have that usecase then perhaps this should be more strict.
 var datePattern = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}`)
 
+var strictDatePattern = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
+
 // Date represents a nil-able date encoded as ISO
 type Date struct {
 	v           string
@@ -63,43 +65,20 @@ func (v Date) DaysAgo() (Int64, error) {
 	return NewInt(int(time.Since(t).Hours() / 24)), nil
 }
 
-// Time returns a time.Time instance for this Date.
-func (v Date) Time() (time.Time, error) {
-	var t time.Time
-	if v.Nil() {
-		return t, errors.Errorf("value %v is not a valid date", v.v)
-	}
-	t, err := time.Parse("2006-01-02", v.String())
-	if err != nil {
-		return t, err
-	}
-	return t, nil
-}
-
 // Before reports whether the Date instance is before d.
 func (v Date) Before(d Date) (bool, error) {
-	t, err := v.Time()
-	if err != nil {
-		return false, err
+	if !strictDatePattern.MatchString(v.String()) || !strictDatePattern.MatchString(d.String()) {
+		return false, errors.Errorf("malformed date - v: %v d: %v", v.v, d.v)
 	}
-	u, err := d.Time()
-	if err != nil {
-		return false, err
-	}
-	return t.Before(u), nil
+	return v.String() < d.String(), nil
 }
 
-// Before reports whether the Date instance is after d.
+// After reports whether the Date instance is after d.
 func (v Date) After(d Date) (bool, error) {
-	t, err := v.Time()
-	if err != nil {
-		return false, err
+	if !strictDatePattern.MatchString(v.String()) || !strictDatePattern.MatchString(d.String()) {
+		return false, errors.Errorf("malformed date - v %v d %v", v.v, d.v)
 	}
-	u, err := d.Time()
-	if err != nil {
-		return false, err
-	}
-	return t.After(u), nil
+	return v.String() > d.String(), nil
 }
 
 // String implements the fmt.Stringer interface
