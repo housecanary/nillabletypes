@@ -178,7 +178,6 @@ func TestDate_Before(t *testing.T) {
 			if err != nil {
 				t.Errorf("Date.Before(): error = %v", err)
 			}
-			// got := tt.this.Before(tt.other)
 			if got != tt.want {
 				t.Errorf("Date.Before(): got = %v, want = %v", got, tt.want)
 			}
