@@ -146,6 +146,136 @@ func daysAgo(days int) string {
 	return newTime.Format("2006-01-02")
 }
 
+func TestDate_Before(t *testing.T) {
+	tests := []struct {
+		name  string
+		this  Date
+		other Date
+		want  bool
+	}{
+		{
+			name:  "this before other",
+			this:  Date{v: "2023-05-20", present: true, initialized: true},
+			other: Date{v: "2023-05-22", present: true, initialized: true},
+			want:  true,
+		},
+		{
+			name:  "this not before other",
+			this:  Date{v: "2023-05-30", present: true, initialized: true},
+			other: Date{v: "2023-05-22", present: true, initialized: true},
+			want:  false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := tt.this.Before(tt.other)
+			if err != nil {
+				t.Errorf("Date.Before(): error = %v", err)
+			}
+			if got != tt.want {
+				t.Errorf("Date.Before(): got = %v, want = %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDate_BeforeErr(t *testing.T) {
+	tests := []struct {
+		name  string
+		this  Date
+		other Date
+	}{
+		{
+			name:  "nil",
+			this:  Date{present: false, initialized: true},
+			other: Date{v: "2023-05-22", present: true, initialized: true},
+		},
+		{
+			name:  "malformed this",
+			this:  Date{v: "20230525", present: true, initialized: true},
+			other: Date{v: "2023-05-26", present: true, initialized: true},
+		},
+		{
+			name:  "malformed other",
+			this:  Date{v: "2023-05-25", present: true, initialized: true},
+			other: Date{v: "20230526", present: true, initialized: true},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := tt.this.Before(tt.other)
+			if err == nil {
+				t.Errorf("Date.Before(): got nil when expected error")
+			}
+		})
+	}
+}
+
+func TestDate_After(t *testing.T) {
+	tests := []struct {
+		name  string
+		this  Date
+		other Date
+		want  bool
+	}{
+		{
+			name:  "this after other",
+			this:  Date{v: "2023-05-30", present: true, initialized: true},
+			other: Date{v: "2023-05-22", present: true, initialized: true},
+			want:  true,
+		},
+		{
+			name:  "this not after other",
+			this:  Date{v: "2023-05-20", present: true, initialized: true},
+			other: Date{v: "2023-05-22", present: true, initialized: true},
+			want:  false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := tt.this.After(tt.other)
+			if err != nil {
+				t.Errorf("Date.After(): error = %v", err)
+			}
+			if got != tt.want {
+				t.Errorf("Date.After(): got = %v, want = %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDate_AfterErr(t *testing.T) {
+	tests := []struct {
+		name  string
+		this  Date
+		other Date
+	}{
+		{
+			name:  "nil",
+			this:  Date{present: false, initialized: true},
+			other: Date{v: "2023-05-22", present: true, initialized: true},
+		},
+		{
+			name:  "malformed this",
+			this:  Date{v: "20230525", present: true, initialized: true},
+			other: Date{v: "2023-05-26", present: true, initialized: true},
+		},
+		{
+			name:  "malformed other",
+			this:  Date{v: "2023-05-25", present: true, initialized: true},
+			other: Date{v: "20230526", present: true, initialized: true},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := tt.this.After(tt.other)
+			if err == nil {
+				t.Errorf("Date.After(): got nil when expected error")
+			}
+		})
+	}
+}
+
 func TestDate_String(t *testing.T) {
 	tests := []struct {
 		name string

@@ -63,6 +63,45 @@ func (v Date) DaysAgo() (Int64, error) {
 	return NewInt(int(time.Since(t).Hours() / 24)), nil
 }
 
+// Time returns a time.Time instance for this Date.
+func (v Date) Time() (time.Time, error) {
+	var t time.Time
+	if v.Nil() {
+		return t, errors.Errorf("value %v is not a valid date", v.v)
+	}
+	t, err := time.Parse("2006-01-02", v.String())
+	if err != nil {
+		return t, err
+	}
+	return t, nil
+}
+
+// Before reports whether the Date instance is before d.
+func (v Date) Before(d Date) (bool, error) {
+	t, err := v.Time()
+	if err != nil {
+		return false, err
+	}
+	u, err := d.Time()
+	if err != nil {
+		return false, err
+	}
+	return t.Before(u), nil
+}
+
+// Before reports whether the Date instance is after d.
+func (v Date) After(d Date) (bool, error) {
+	t, err := v.Time()
+	if err != nil {
+		return false, err
+	}
+	u, err := d.Time()
+	if err != nil {
+		return false, err
+	}
+	return t.After(u), nil
+}
+
 // String implements the fmt.Stringer interface
 func (v Date) String() string {
 	return v.v
