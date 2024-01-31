@@ -20,6 +20,7 @@ to some other function.
 * `String`: represents a nil-able `string` type.
 * `Date`: represents a nil-able date encoded as an ISO string.
 * `Uint32`: represents a nil-able `uint32` type.
+* `UUID`: represents a nil-able `UUID` type.
 
 ## Supported Interfaces
 
