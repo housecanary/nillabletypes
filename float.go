@@ -17,10 +17,10 @@ package nillabletypes
 import (
 	"bytes"
 	"database/sql/driver"
-	"encoding/json"
 	"strconv"
 
 	"github.com/pkg/errors"
+	"github.com/segmentio/encoding/json"
 )
 
 // Float represents a nil-able float

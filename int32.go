@@ -17,11 +17,11 @@ package nillabletypes
 import (
 	"bytes"
 	"database/sql/driver"
-	"encoding/json"
 	"math"
 	"strconv"
 
 	"github.com/pkg/errors"
+	"github.com/segmentio/encoding/json"
 )
 
 // Int32 represents a nil-able int

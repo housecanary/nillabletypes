@@ -16,11 +16,12 @@ package nillabletypes
 
 import (
 	"database/sql/driver"
-	"encoding/json"
 	"fmt"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/segmentio/encoding/json"
 )
 
 func TestNewFloat(t *testing.T) {
