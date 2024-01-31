@@ -17,9 +17,9 @@ package nillabletypes
 import (
 	"bytes"
 	"database/sql/driver"
-	"encoding/json"
 
 	"github.com/pkg/errors"
+	"github.com/segmentio/encoding/json"
 )
 
 // String represents a nil-able string

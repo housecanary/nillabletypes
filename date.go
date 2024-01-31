@@ -17,11 +17,11 @@ package nillabletypes
 import (
 	"bytes"
 	"database/sql/driver"
-	"encoding/json"
 	"regexp"
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/segmentio/encoding/json"
 )
 
 // TODO(faulkner): technically this is incorrect since it'll match "2000-12-3456789"; useful if we want to trim the time from a datetime, but if we don't have that usecase then perhaps this should be more strict.
