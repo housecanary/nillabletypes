@@ -18,6 +18,7 @@ to some other function.
 * `Int`: a typealias for either Int32 or Int64, depending on whether the target
   architecture is 32- or 64-bit.
 * `String`: represents a nil-able `string` type.
+* `Time`: represents a nil-able `time.Time`` type.
 * `Date`: represents a nil-able date encoded as an ISO string.
 * `Uint32`: represents a nil-able `uint32` type.
 * `UUID`: represents a nil-able `UUID` type.
