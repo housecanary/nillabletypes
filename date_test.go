@@ -352,9 +352,6 @@ func TestDate_Value(t *testing.T) {
 }
 
 func TestDate_Scan(t *testing.T) {
-	type args struct {
-		src interface{}
-	}
 	tests := []struct {
 		name    string
 		give    interface{}

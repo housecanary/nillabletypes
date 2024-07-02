@@ -167,9 +167,6 @@ func TestInt64_String(t *testing.T) {
 }
 
 func TestInt64_UnmarshalJSON(t *testing.T) {
-	type args struct {
-		data []byte
-	}
 	tests := []struct {
 		name    string
 		give    []byte
