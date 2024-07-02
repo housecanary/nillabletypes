@@ -63,6 +63,37 @@ func TestNilDate(t *testing.T) {
 	}
 }
 
+func TestNewDateFromTime(t *testing.T) {
+	tests := []struct {
+		name string
+		give Time
+		want Date
+	}{
+		{
+			name: "Nil Time",
+			give: NilTime(),
+			want: NilDate(),
+		},
+		{
+			name: "Valid Time",
+			give: NewTime(time.Date(2019, 9, 20, 0, 0, 0, 0, time.Local)),
+			want: NewDate("2019-09-20"),
+		},
+		{
+			name: "Valid Time with minutes",
+			give: NewTime(time.Date(2019, 7, 11, 12, 30, 0, 0, time.Local)),
+			want: NewDate("2019-07-11"),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NewDateFromTime(tt.give); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewDateFromTime() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestDate_Nil(t *testing.T) {
 	tests := []struct {
 		name string
@@ -321,9 +352,6 @@ func TestDate_Value(t *testing.T) {
 }
 
 func TestDate_Scan(t *testing.T) {
-	type args struct {
-		src interface{}
-	}
 	tests := []struct {
 		name    string
 		give    interface{}

@@ -25,9 +25,6 @@ import (
 )
 
 func TestNewFloat(t *testing.T) {
-	type args struct {
-		v float64
-	}
 	tests := []struct {
 		name string
 		give float64
@@ -311,9 +308,6 @@ func TestFloat_Value(t *testing.T) {
 }
 
 func TestFloat_Scan(t *testing.T) {
-	type args struct {
-		src interface{}
-	}
 	tests := []struct {
 		name    string
 		give    interface{}
