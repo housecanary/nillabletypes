@@ -49,6 +49,14 @@ func (v Date) Nil() bool {
 	return !v.present
 }
 
+// NewDateFromTime makes new Date from Time and matches its nihilism
+func NewDateFromTime(t Time) Date {
+	if t.Nil() {
+		return NilDate()
+	}
+	return NewDate(t.Time().Format(time.DateOnly))
+}
+
 // DaysAgo returns the number of days elapsed since Date
 func (v Date) DaysAgo() (Int64, error) {
 	if v.Nil() {
