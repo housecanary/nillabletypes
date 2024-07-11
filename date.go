@@ -27,6 +27,8 @@ import (
 // TODO(faulkner): technically this is incorrect since it'll match "2000-12-3456789"; useful if we want to trim the time from a datetime, but if we don't have that usecase then perhaps this should be more strict.
 var datePattern = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}`)
 
+var strictDatePattern = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
+
 // Date represents a nil-able date encoded as ISO
 type Date struct {
 	v           string
@@ -69,6 +71,22 @@ func (v Date) DaysAgo() (Int64, error) {
 	}
 
 	return NewInt(int(time.Since(t).Hours() / 24)), nil
+}
+
+// Before reports whether the Date instance is before d.
+func (v Date) Before(d Date) (bool, error) {
+	if !strictDatePattern.MatchString(v.String()) || !strictDatePattern.MatchString(d.String()) {
+		return false, errors.Errorf("malformed date - v: %v d: %v", v.v, d.v)
+	}
+	return v.String() < d.String(), nil
+}
+
+// After reports whether the Date instance is after d.
+func (v Date) After(d Date) (bool, error) {
+	if !strictDatePattern.MatchString(v.String()) || !strictDatePattern.MatchString(d.String()) {
+		return false, errors.Errorf("malformed date - v %v d %v", v.v, d.v)
+	}
+	return v.String() > d.String(), nil
 }
 
 // String implements the fmt.Stringer interface
