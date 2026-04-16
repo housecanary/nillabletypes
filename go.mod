@@ -1,13 +1,13 @@
 module github.com/housecanary/nillabletypes
 
-go 1.21
+go 1.25.0
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/jackc/pgx/v5 v5.5.4
+	github.com/jackc/pgx/v5 v5.9.0
 	github.com/pkg/errors v0.8.1
 	github.com/segmentio/encoding v0.4.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
